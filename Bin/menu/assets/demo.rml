@@ -23,5 +23,8 @@
 	</head>
 	<body template="window">
 		Will eat your brain.
+		<div id="btn">
+			<button onclick="changeName">Button</button>
+		</div>
 	</body>
 </rml>

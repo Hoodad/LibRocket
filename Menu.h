@@ -9,6 +9,7 @@
 #include "SystemInterfaceDx10.h"
 #include <Rocket/Core.h>
 #include <Rocket/Debugger.h>
+#include "ButtonEvent.h"
 
 using namespace std;
 
@@ -20,7 +21,10 @@ private:
 	RenderInterfaceDx10* renderInterface;
 	SystemInterfaceDx10* systemInterface;
 	Rocket::Core::Context* context;
-	Rocket::Core::ElementDocument* document;
+	Rocket::Core::ElementDocument* m_document1;
+	Rocket::Core::ElementDocument* m_document2;
+	ButtonEvent* m_btn1;
+	ButtonEvent* m_btn2;
 
 	//string documentFileName;
 
