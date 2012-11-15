@@ -8,6 +8,13 @@
 
 class InputHandler
 {
+	//Enums
+public:
+	enum KEY_STATE{ KEY_DOWN, KEY_PRESSED, KEY_UP, KEY_RELEASED };
+	enum KEYBOARD{ W, A, S, D, SPACE, LCTRL, F1, F2, F3, F4, NUM_KEYB_KEYS };
+	enum MOUSE_KEY{ M_LBTN, M_MBTN, M_RBTN, NUM_MOUSE_KEYS };
+	enum MOUSE{ X, Y, NUM_MOUSE_AXIS };
+
 private:
 	HINSTANCE* hInstance;
 	HWND* hWnd;
@@ -27,11 +34,6 @@ private:
 	float mouseSpeedX;
 
 public:
-	enum KEY_STATE{ KEY_DOWN, KEY_PRESSED, KEY_UP, KEY_RELEASED };
-	enum KEYBOARD{ W, A, S, D, SPACE, LCTRL, F1, F2, F3, F4, NUM_KEYB_KEYS };
-	enum MOUSE_KEY{ M_LBTN, M_MBTN, M_RBTN, NUM_MOUSE_KEYS };
-	enum MOUSE{ X, Y, NUM_MOUSE_AXIS };
-
 	InputHandler(HINSTANCE* hInstance, HWND* hWnd); // sets up and initializes DirectInput
 	~InputHandler();	//closes DirectInput and releases memory
 	void reset();

@@ -32,6 +32,12 @@ InputHandler::InputHandler(HINSTANCE* _hInstance, HWND* _hWnd)
 
 	// Debug Vars
 	mouseSpeedX = 1.0f;
+
+	for ( int i=0; i<NUM_MOUSE_KEYS; i++)
+	{
+		m_mouseKeys[i] = KEY_UP;
+	}
+	
 }
 
 InputHandler::~InputHandler()
@@ -101,23 +107,39 @@ void InputHandler::update()
 
 	for( int i=0; i<NUM_MOUSE_KEYS; i++)
 	{
-		if( m_mouseKeys[i] == KEY_DOWN )
-			if( mousestate.rgbButtons[i] )
-				m_mouseKeys[i] = KEY_DOWN;
-			else
-				m_mouseKeys[i] = KEY_RELEASED;
-
-		if( m_mouseKeys[i] == KEY_PRESSED )
-			if( mousestate.rgbButtons[i] )
-				m_mouseKeys[i] = KEY_DOWN;
-			else
-				m_mouseKeys[i] = KEY_RELEASED;
-
 		if( m_mouseKeys[i] == KEY_UP )
+		{
 			if( mousestate.rgbButtons[i] )
 				m_mouseKeys[i] = KEY_PRESSED;
 			else
 				m_mouseKeys[i] = KEY_UP;
+		}
+		else if( m_mouseKeys[i] == KEY_PRESSED )
+		{
+			if( mousestate.rgbButtons[i] )
+				m_mouseKeys[i] = KEY_DOWN;
+			else
+				m_mouseKeys[i] = KEY_RELEASED;
+		}
+		else if( m_mouseKeys[i] == KEY_DOWN )
+		{
+			if( mousestate.rgbButtons[i] )
+				m_mouseKeys[i] = KEY_DOWN;
+			else
+				m_mouseKeys[i] = KEY_RELEASED;
+		}
+		else if( m_mouseKeys[i] == KEY_RELEASED )
+		{
+			if( mousestate.rgbButtons[i] )
+				m_mouseKeys[i] = KEY_PRESSED;
+			else
+				m_mouseKeys[i] = KEY_UP;
+		}
+		else
+		{
+			// should NEVER happen!
+			m_mouseKeys[i] = KEY_UP;
+		}
 	}
 }
 
