@@ -39,7 +39,7 @@ void DeviceHandler::initWindow()
 
 	//create window, save result
 	m_hWnd = CreateWindowEx(NULL, L"WindowClass", L"Window", 
-		WS_OVERLAPPEDWINDOW, 100, 100, m_wndWidth, m_wndHeight, NULL, NULL,
+		WS_OVERLAPPEDWINDOW, -7, -29, m_wndWidth, m_wndHeight, NULL, NULL,
 		m_hInstance, NULL);
 
 	ShowWindow(m_hWnd, SW_SHOW);

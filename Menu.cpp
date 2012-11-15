@@ -85,10 +85,10 @@ void MenuShit::update(float _dt)
 
 	context->ProcessMouseMove(cursorPos.x, cursorPos.y,0);
 
-	//if(input->getLeftMouseButton() == KEY_DOWN_NOW)
-	//	context->ProcessMouseButtonDown(0,0);
-	//else if(input->getLeftMouseButton() == KEY_RELEASED)
-	//	context->ProcessMouseButtonUp(0,0);
+	if( input->getKey( InputHandler::A ) )
+		context->ProcessMouseButtonDown(0,0);
+	else if( input->getKey( InputHandler::S ) )
+		context->ProcessMouseButtonUp(0,0);
 
 	//if(input->getRightMouseButton() == KEY_DOWN_NOW)
 	//	context->ProcessMouseButtonDown(0,0);
