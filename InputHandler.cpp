@@ -98,11 +98,37 @@ void InputHandler::update()
 
 	if(keystate[DIK_ESCAPE] & 0x80)
 		PostMessage(*hWnd, WM_DESTROY, 0, 0);
+
+	for( int i=0; i<NUM_MOUSE_KEYS; i++)
+	{
+		if( m_mouseKeys[i] == KEY_DOWN )
+			if( mousestate.rgbButtons[i] )
+				m_mouseKeys[i] = KEY_DOWN;
+			else
+				m_mouseKeys[i] = KEY_RELEASED;
+
+		if( m_mouseKeys[i] == KEY_PRESSED )
+			if( mousestate.rgbButtons[i] )
+				m_mouseKeys[i] = KEY_DOWN;
+			else
+				m_mouseKeys[i] = KEY_RELEASED;
+
+		if( m_mouseKeys[i] == KEY_UP )
+			if( mousestate.rgbButtons[i] )
+				m_mouseKeys[i] = KEY_PRESSED;
+			else
+				m_mouseKeys[i] = KEY_UP;
+	}
 }
 
 bool InputHandler::getKey(int key)
 {
 	return keys[key];
+}
+
+int InputHandler::getMouseKeyState( int p_key )
+{
+	return m_mouseKeys[p_key];
 }
 
 long InputHandler::getMouse(int axis)

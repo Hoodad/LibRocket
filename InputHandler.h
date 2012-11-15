@@ -17,17 +17,20 @@ private:
 	BYTE keystate[256];    // the storage for the key-information
 	DIMOUSESTATE mousestate;    // the storage for the mouse-information
 
-	bool keys[10];
+	bool keys[NUM_KEYB_KEYS];
 
-	long mouse[2];
+	long mouse[NUM_MOUSE_AXIS];
+	int m_mouseKeys[NUM_MOUSE_KEYS];
 
 	// For the debug GUI
 	bool autoRotate;
 	float mouseSpeedX;
 
 public:
-	enum KEYBOARD{W,A,S,D,SPACE,LCTRL,F1,F2,F3,F4};
-	enum MOUSE{X,Y};
+	enum KEY_STATE{ KEY_DOWN, KEY_PRESSED, KEY_UP, KEY_RELEASED };
+	enum KEYBOARD{ W, A, S, D, SPACE, LCTRL, F1, F2, F3, F4, NUM_KEYB_KEYS };
+	enum MOUSE_KEY{ M_LBTN, M_MBTN, M_RBTN, NUM_MOUSE_KEYS };
+	enum MOUSE{ X, Y, NUM_MOUSE_AXIS };
 
 	InputHandler(HINSTANCE* hInstance, HWND* hWnd); // sets up and initializes DirectInput
 	~InputHandler();	//closes DirectInput and releases memory
@@ -35,6 +38,7 @@ public:
 	void detectInput(void);    // gets the current input state
 	void update();
 	bool getKey(int key);
+	int getMouseKeyState( int p_key);
 	long getMouse(int axis);
 };
 
