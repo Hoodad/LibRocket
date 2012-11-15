@@ -5,9 +5,10 @@
 	<body class="outer">
 		<div class="inner">
 			<div  id="title_bar">
-				<span id="title">anuZ</span>
+				<span id="title" onclick="assets/main.rml" >anuZ</span>
 			</div>
-			<div id="content"></div>
+			<div id="content">
+			</div>
 		</div>
 	</body>
 </template>

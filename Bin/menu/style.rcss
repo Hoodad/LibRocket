@@ -36,9 +36,9 @@ body.outer
 
 div#title_bar span#title:hover
 {
-	font-size: 32;
+	font-size: 24;
 	font-weight: bold;
-	color: black;
+	color: rgb( 0%, 0%, 200% );
 	
 	outline-font-effect: outline;
 	outline-width: 1px;
