@@ -1,31 +1,15 @@
 #include "Menu.h"
 
-MenuShit::MenuShit()
+BasicMenu::BasicMenu(InputHandler* p_input, Timer* p_timer, int p_wndWidth, int p_wndHeight,
+	ID3D10Device* p_device, ID3D10Effect* p_effect, int p_techNr, int p_passNr)
 {
-	input           = NULL;
-	renderInterface = NULL;
-	systemInterface = NULL;
-	context         = NULL;
-	m_document		= NULL;
-	m_btn1			= NULL;
-}
+	m_shutdown = false;
+	m_document = NULL;
+	m_timer = p_timer;
+	input = p_input;
 
-MenuShit::~MenuShit()
-{
-	releaseContext();
-
-	delete renderInterface;
-	delete systemInterface;
-}
-
-void MenuShit::init(InputHandler* _input, Timer* _timer, int _wndWidth, int _wndHeight,
-	ID3D10Device* _device, ID3D10Effect* _effect, int _techNr, int _passNr)
-{
-	input = _input;
-	//timer = _timer;
-
-	renderInterface = new RenderInterfaceDx10(_device, _effect, _techNr, _passNr);
-	systemInterface = new SystemInterfaceDx10(_timer);
+	renderInterface = new RenderInterfaceDx10(p_device, p_effect, p_techNr, p_passNr);
+	systemInterface = new SystemInterfaceDx10(p_timer);
 
 	Rocket::Core::SetSystemInterface(systemInterface);
 	Rocket::Core::SetRenderInterface(renderInterface);
@@ -41,7 +25,15 @@ void MenuShit::init(InputHandler* _input, Timer* _timer, int _wndWidth, int _wnd
 	Rocket::Core::FontDatabase::LoadFontFace("../menu/assets/Delicious-Roman.otf");
 }
 
-bool MenuShit::setDocument(string _fileName)
+BasicMenu::~BasicMenu()
+{
+	releaseContext();
+
+	delete renderInterface;
+	delete systemInterface;
+	delete m_timer;
+}
+bool BasicMenu::setDocument(string _fileName)
 {
 	releaseDocument();
 
@@ -52,25 +44,15 @@ bool MenuShit::setDocument(string _fileName)
 		m_document = context->LoadDocument(_fileName.c_str());
 		if(m_document != NULL)
 		{
-			m_document->GetElementById("title")->SetInnerRML("DELUXE");
-			Rocket::Core::Element *element = m_document->GetElementById("btn");
-
-			if(element != NULL)
-			{
-				m_btn1 = new ButtonEvent( m_document, "Changed" );
-				element->AddEventListener( "click", m_btn1 );
-			}
-
 			success = true;
 			m_document->Show();
 			m_document->RemoveReference();
 		}
-
 	}
 	return success;
 }
 
-void MenuShit::releaseContext()
+void BasicMenu::releaseContext()
 {
 	releaseDocument();
 	context->RemoveReference(); //release context
@@ -78,7 +60,7 @@ void MenuShit::releaseContext()
 	context = NULL;
 }
 
-void MenuShit::releaseDocument()
+void BasicMenu::releaseDocument()
 {
 	if(m_document != NULL)
 	{
@@ -87,7 +69,7 @@ void MenuShit::releaseDocument()
 	}
 }
 
-void MenuShit::update(float _dt)
+void BasicMenu::update(float _dt)
 {
 	POINT cursorPos;
 	GetCursorPos(&cursorPos);
@@ -107,8 +89,60 @@ void MenuShit::update(float _dt)
 	context->Update();
 }
 
-void MenuShit::draw()
+void BasicMenu::draw()
 {
 	context->Render();
 	
+}
+
+bool BasicMenu::loadDocument( string p_filename )
+{
+	releaseDocument();
+
+	bool result = false;
+
+	if(context != NULL)
+	{
+		m_document = context->LoadDocument(p_filename.c_str());
+		if(m_document != NULL)
+		{
+			result = true;
+			m_document->Show();
+			m_document->RemoveReference();
+		}
+	}
+
+	Rocket::Core::Element* title = m_document->GetElementById("title");
+	if(title != NULL)
+		title->SetInnerRML(m_document->GetTitle());
+
+	return result;
+}
+
+void BasicMenu::requestShutdown()
+{
+	m_shutdown = false;
+}
+
+void BasicMenu::beginLoop(InputHandler* p_inputHandler, DeviceHandler* p_deviceHandler)
+{
+	MSG msg = {0};
+	m_timer->reset();
+	while(msg.message != WM_QUIT && m_shutdown == false)
+	{
+		if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else
+		{
+			m_timer->tick();
+			p_inputHandler->update();
+			update(m_timer->getDt());
+			p_deviceHandler->beginDrawing();
+			draw();
+			p_deviceHandler->presentFrame();
+		}
+	}
 }

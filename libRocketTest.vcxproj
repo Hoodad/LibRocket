@@ -92,6 +92,8 @@
   <ItemGroup>
     <ClCompile Include="ButtonEvent.cpp" />
     <ClCompile Include="DeviceHandler.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -103,6 +105,8 @@
   <ItemGroup>
     <ClInclude Include="ButtonEvent.h" />
     <ClInclude Include="DeviceHandler.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="RenderInterfaceDx10.h" />

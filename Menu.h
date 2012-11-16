@@ -10,35 +10,32 @@
 #include <Rocket/Core.h>
 #include <Rocket/Debugger.h>
 #include "ButtonEvent.h"
+#include "DeviceHandler.h"
 
 using namespace std;
 
-class MenuShit
+class BasicMenu
 {
 private:
 	InputHandler* input;
-	//Timer* timer;
 	RenderInterfaceDx10* renderInterface;
 	SystemInterfaceDx10* systemInterface;
 	Rocket::Core::Context* context;
 	Rocket::Core::ElementDocument* m_document;
-	Rocket::Core::ElementDocument* m_document2;
-	ButtonEvent* m_btn1;
-	ButtonEvent* m_btn2;
-
-	//string documentFileName;
-
+	bool m_shutdown;
+	Timer* m_timer;
 public:
-	MenuShit();
-	~MenuShit();
-	void init(InputHandler* _input, Timer* _timer, int _wndWidth, int _wndHeight,
-		ID3D10Device* _device, ID3D10Effect* _effect, int _techNr, int _passNr);
+	BasicMenu(InputHandler* p_input, Timer* p_timer, int p_wndWidth, int p_wndHeight,
+		ID3D10Device* p_device, ID3D10Effect* p_effect, int p_techNr, int p_passNr);
+	~BasicMenu();
 	bool setDocument(string filename);
+	bool loadDocument(string p_filename);
 	void releaseContext();
 	void releaseDocument();
 	void update(float _dt);
 	void draw();
-
+	void requestShutdown();
+	void beginLoop(InputHandler* p_inputHandler, DeviceHandler* p_deviceHandler);
 };
 
 #endif
