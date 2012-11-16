@@ -34,8 +34,8 @@ void MenuShit::init(InputHandler* _input, Timer* _timer, int _wndWidth, int _wnd
 	Rocket::Core::Initialise();
 
 	context = Rocket::Core::CreateContext("default", Rocket::Core::Vector2i(1280, 720));
-	//Rocket::Debugger::Initialise(context);
-	//Rocket::Debugger::SetVisible(true);
+	Rocket::Debugger::Initialise(context);
+	Rocket::Debugger::SetVisible(true);
 
 	Rocket::Core::FontDatabase::LoadFontFace("../menu/assets/Delicious-Bold.otf");
 	Rocket::Core::FontDatabase::LoadFontFace("../menu/assets/Delicious-BoldItalic.otf");

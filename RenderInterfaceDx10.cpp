@@ -65,6 +65,7 @@ RenderInterfaceDx10::RenderInterfaceDx10(ID3D10Device* _device, ID3D10Effect* _e
 	defineBlendState();
 	initPipeline();
 	initFxVars();
+	initDefaultTex();
 }
 
 RenderInterfaceDx10::~RenderInterfaceDx10()
@@ -73,6 +74,7 @@ RenderInterfaceDx10::~RenderInterfaceDx10()
 	SAFE_RELEASE(rs_scissorsOff);
 	SAFE_RELEASE(inputLayout);
 	delete layoutDesc;
+	delete defaultTex;
 
 	Rocket::Core::Shutdown();
 }
@@ -99,9 +101,17 @@ Rocket::Core::CompiledGeometryHandle RenderInterfaceDx10 :: CompileGeometry(Rock
 	VertexType _vertex;
 	for (int i = 0; i < num_vertices; i++)
 	{
-		_vertex.pos = D3DXVECTOR3(vertices[i].position.x, vertices[i].position.y, 0);
-		_vertex.color = D3DXCOLOR(vertices[i].colour.red, vertices[i].colour.green, vertices[i].colour.blue, vertices[i].colour.alpha);
-		_vertex.texCoord = D3DXVECTOR2(vertices[i].tex_coord[0], vertices[i].tex_coord[1]);
+		_vertex.pos		= D3DXVECTOR3(	vertices[i].position.x, 
+										vertices[i].position.y,
+										0						);
+
+		_vertex.color	= D3DXCOLOR(	vertices[i].colour.red, 
+										vertices[i].colour.green, 
+										vertices[i].colour.blue, 
+										vertices[i].colour.alpha);
+
+		_vertex.texCoord = D3DXVECTOR2(	vertices[i].tex_coord[0], 
+										vertices[i].tex_coord[1]);
 
 		geometry->vertices.push_back(_vertex);
 	}
@@ -154,14 +164,16 @@ void RenderInterfaceDx10 :: RenderCompiledGeometry(Rocket::Core::CompiledGeometr
 	device->OMSetBlendState(bs_normal, blendFactor, 0xffffffff);
 
 	// set which texture to use
-	if(_geometry->texture != NULL)
-		_geometry->texture->useTexture();
+	if(_geometry->texture == NULL)
+		_geometry->texture = defaultTex;
+	
+	_geometry->texture->useTexture();
 
 	// Build and set the transform matrix.
 	D3DXMatrixTranslation(&mat_world, translation.x, translation.y, 0);
 	
 	//==================================================================
-	// HACK below: changing coordinate system from NDC to:
+	// HACK below: changing coordinate system from ScreenSpace to NDC:
 	//    0%
 	// 0% #---#
 	//	  |   |
@@ -423,4 +435,14 @@ void RenderInterfaceDx10::defineBlendState()
 	blendDesc.RenderTargetWriteMask[0] = D3D10_COLOR_WRITE_ENABLE_ALL;
 
 	HR(device->CreateBlendState(&blendDesc, &bs_normal));
+}
+
+void RenderInterfaceDx10::initDefaultTex()
+{
+	defaultTex = new Texture();
+	defaultTex->setDeviceAndFx( device, effect );
+	defaultTex->setDynamic( 1, 1 );
+	byte pix[] =  {128, 128, 128, 128};
+	defaultTex->setPixel( pix, 0, 0 );
+	defaultTex->initTexture();
 }

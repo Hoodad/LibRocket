@@ -68,10 +68,10 @@ void Texture::setPixel(const byte* _source, int _x, int _y)
 	UINT rowStart = _x * mappedTex.RowPitch;
 	UINT colStart = _y * 4;
 
-	pTexels[rowStart + colStart + 0] = 255; // Red
-	pTexels[rowStart + colStart + 1] = 128; // Green
-	pTexels[rowStart + colStart + 2] = 64;  // Blue
-	pTexels[rowStart + colStart + 3] = 32;  // Alpha
+	pTexels[rowStart + colStart + 0] = _source[rowStart + colStart + 0]; // Red
+	pTexels[rowStart + colStart + 1] = _source[rowStart + colStart + 1]; // Green
+	pTexels[rowStart + colStart + 2] = _source[rowStart + colStart + 2];  // Blue
+	pTexels[rowStart + colStart + 3] = _source[rowStart + colStart + 3];  // Alpha
 
 	tex_texture->Unmap( D3D10CalcSubresource(0, 0, 1) );
 }

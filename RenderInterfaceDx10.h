@@ -71,6 +71,9 @@ private:
 	ID3D10EffectMatrixVariable* fxVar_world;
 	D3DXMATRIX mat_world;
 
+	/// Default textures
+	Texture* defaultTex;
+
 public:
 	RenderInterfaceDx10(ID3D10Device* _device, ID3D10Effect* _effect, int _techNr, int _passNr);
 	virtual ~RenderInterfaceDx10();
@@ -111,6 +114,7 @@ public:
 
 	virtual void initPipeline();
 	virtual void initFxVars();
+	virtual void initDefaultTex();
 };
 
 #endif //RENDERINTERFACEDX10_H

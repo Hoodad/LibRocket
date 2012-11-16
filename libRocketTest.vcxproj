@@ -46,7 +46,7 @@
     <ExecutablePath>$(SolutionDir)/Bin/$(Configuration);$(ExecutablePath)</ExecutablePath>
     <SourcePath>..\External\src;$(SourcePath)</SourcePath>
     <OutDir>$(SolutionDir)/Bin/$(Configuration)/</OutDir>
-    <IntDir>$(SolutionDir)/Obj/$(Configuration)/</IntDir>
+    <IntDir>$(SolutionDir)/Bin/$(Configuration)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
