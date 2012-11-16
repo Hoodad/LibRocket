@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "InputHandler.h"
+#include "DIInputHandler.h"
 #include "Timer.h"
 #include "RenderInterfaceDx10.h"
 #include "SystemInterfaceDx10.h"
@@ -16,7 +16,7 @@ using namespace std;
 class MenuShit
 {
 private:
-	InputHandler* input;
+	DIInputHandler* input;
 	//Timer* timer;
 	RenderInterfaceDx10* renderInterface;
 	SystemInterfaceDx10* systemInterface;
@@ -31,7 +31,7 @@ private:
 public:
 	MenuShit();
 	~MenuShit();
-	void init(InputHandler* _input, Timer* _timer, int _wndWidth, int _wndHeight,
+	void init(DIInputHandler* _input, Timer* _timer, int _wndWidth, int _wndHeight,
 		ID3D10Device* _device, ID3D10Effect* _effect, int _techNr, int _passNr);
 	bool setDocument(string filename);
 	void releaseContext();

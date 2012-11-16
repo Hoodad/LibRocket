@@ -20,7 +20,7 @@ MenuShit::~MenuShit()
 	delete systemInterface;
 }
 
-void MenuShit::init(InputHandler* _input, Timer* _timer, int _wndWidth, int _wndHeight,
+void MenuShit::init(DIInputHandler* _input, Timer* _timer, int _wndWidth, int _wndHeight,
 	ID3D10Device* _device, ID3D10Effect* _effect, int _techNr, int _passNr)
 {
 	input = _input;
@@ -111,14 +111,14 @@ void MenuShit::update(float _dt)
 
 	context->ProcessMouseMove(cursorPos.x, cursorPos.y,0);
 
-	if( input->getMouseKeyState( InputHandler::M_LBTN ) == InputHandler::KEY_PRESSED )
+	if( input->getMouseKeyState( DIInputHandler::M_LBTN ) == DIInputHandler::KEY_PRESSED )
 		context->ProcessMouseButtonDown( 0, 0 );
-	else if( input->getMouseKeyState( InputHandler::M_LBTN ) == InputHandler::KEY_RELEASED )
+	else if( input->getMouseKeyState( DIInputHandler::M_LBTN ) == DIInputHandler::KEY_RELEASED )
 		context->ProcessMouseButtonUp( 0, 0 );
 
-	if( input->getMouseKeyState( InputHandler::M_RBTN ) == InputHandler::KEY_PRESSED )
+	if( input->getMouseKeyState( DIInputHandler::M_RBTN ) == DIInputHandler::KEY_PRESSED )
 		context->ProcessMouseButtonDown( 0, 0 );
-	else if( input->getMouseKeyState( InputHandler::M_RBTN ) == InputHandler::KEY_RELEASED )
+	else if( input->getMouseKeyState( DIInputHandler::M_RBTN ) == DIInputHandler::KEY_RELEASED )
 		context->ProcessMouseButtonUp( 0, 0 );
 
 	context->Update();

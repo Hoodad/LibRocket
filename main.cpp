@@ -1,7 +1,7 @@
 #include "Menu.h"
 #include "DeviceHandler.h"
 #include "Timer.h"
-#include "InputHandler.h"
+#include "DIInputHandler.h"
 
 #include <iostream>
 
@@ -13,7 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	DeviceHandler* deviceHandler = new DeviceHandler( hInstance, wndWidth, wndHeight);
 	Timer* timer = new Timer();
-	InputHandler* inputHandler = new InputHandler( &hInstance, deviceHandler->getHWnd());
+	DIInputHandler* inputHandler = new DIInputHandler( &hInstance, deviceHandler->getHWnd());
 	//inputHandler->i
 	MenuShit* menu = new MenuShit();
 	menu->init(inputHandler, timer, wndWidth, wndHeight,
