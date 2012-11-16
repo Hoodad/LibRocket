@@ -21,7 +21,7 @@ private:
 	RenderInterfaceDx10* renderInterface;
 	SystemInterfaceDx10* systemInterface;
 	Rocket::Core::Context* context;
-	Rocket::Core::ElementDocument* m_document1;
+	Rocket::Core::ElementDocument* m_document;
 	Rocket::Core::ElementDocument* m_document2;
 	ButtonEvent* m_btn1;
 	ButtonEvent* m_btn2;

@@ -6,10 +6,8 @@ MenuShit::MenuShit()
 	renderInterface = NULL;
 	systemInterface = NULL;
 	context         = NULL;
-	m_document1		= NULL;
-	m_document2     = NULL;
+	m_document		= NULL;
 	m_btn1			= NULL;
-	m_btn2			= NULL;
 }
 
 MenuShit::~MenuShit()
@@ -51,34 +49,24 @@ bool MenuShit::setDocument(string _fileName)
 
 	if(context != NULL)
 	{
-		m_document1 = context->LoadDocument(_fileName.c_str());
-		m_document2 = context->LoadDocument(_fileName.c_str());
-		if(m_document1 != NULL)
+		m_document = context->LoadDocument(_fileName.c_str());
+		if(m_document != NULL)
 		{
-			m_document1->GetElementById("title")->SetInnerRML("DELUXE");
-			Rocket::Core::Element *element = m_document1->GetElementById("btn");
+			m_document->GetElementById("title")->SetInnerRML("DELUXE");
+			Rocket::Core::Element *element = m_document->GetElementById("btn");
 
 			if(element != NULL)
 			{
-				m_btn1 = new ButtonEvent( m_document1, "Changed" );
+				m_btn1 = new ButtonEvent( m_document, "Changed" );
 				element->AddEventListener( "click", m_btn1 );
 			}
 
 			success = true;
-			m_document1->Show();
-			m_document1->RemoveReference();
+			m_document->Show();
+			m_document->RemoveReference();
 		}
-		if(m_document2 != NULL)
-		{
-			m_document2->GetElementById("title")->SetInnerRML("DESTINY");
-			success = true;
-			m_document2->Show();
-			m_document2->RemoveReference();
-		}
+
 	}
-
-
-
 	return success;
 }
 
@@ -92,15 +80,10 @@ void MenuShit::releaseContext()
 
 void MenuShit::releaseDocument()
 {
-	if(m_document1 != NULL)
+	if(m_document != NULL)
 	{
-		m_document1->GetContext()->UnloadDocument(m_document1);
-		m_document1 = NULL;
-	}
-	if(m_document2 != NULL)
-	{
-		m_document2->GetContext()->UnloadDocument(m_document2);
-		m_document2 = NULL;
+		m_document->GetContext()->UnloadDocument(m_document);
+		m_document = NULL;
 	}
 }
 

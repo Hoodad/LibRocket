@@ -18,7 +18,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	MenuShit* menu = new MenuShit();
 	menu->init(inputHandler, timer, wndWidth, wndHeight,
 		deviceHandler->getDevice(), deviceHandler->getEffect(), 0, 0 );
-	menu->setDocument("../menu/assets/demo.rml");
+	menu->setDocument("../menu/assets/main_menu.rml");
 
 	//exit(0); //HACK: DEBUG: profiling
 	MSG msg = {0};
