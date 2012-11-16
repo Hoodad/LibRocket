@@ -13,66 +13,75 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\LibRocket">
+      <UniqueIdentifier>{f6c80c67-2b1a-4542-92af-d3e16c3072a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Device and stuph">
+      <UniqueIdentifier>{d92575d0-4087-4814-a617-61621efbef8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InputManager">
+      <UniqueIdentifier>{9bfc4d7e-cb8d-4bf0-8aa9-80e4d06c5e01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DeviceHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RenderInterfaceDx10.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SystemInterfaceDx10.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
+    <ClCompile Include="DIInputHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\LibRocket</Filter>
     </ClCompile>
     <ClCompile Include="ButtonEvent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\LibRocket</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderInterfaceDx10.cpp">
+      <Filter>Source Files\LibRocket</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemInterfaceDx10.cpp">
+      <Filter>Source Files\LibRocket</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceHandler.cpp">
+      <Filter>Source Files\Device and stuph</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Device and stuph</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Device and stuph</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DeviceHandler.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderInterfaceDx10.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SystemInterfaceDx10.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexTexture.h">
+    <ClInclude Include="DIInputHandler.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\LibRocket</Filter>
     </ClInclude>
     <ClInclude Include="ButtonEvent.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\LibRocket</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderInterfaceDx10.h">
+      <Filter>Source Files\LibRocket</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemInterfaceDx10.h">
+      <Filter>Source Files\LibRocket</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceHandler.h">
+      <Filter>Source Files\Device and stuph</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Source Files\Device and stuph</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Source Files\Device and stuph</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Source Files\Device and stuph</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexTexture.h">
+      <Filter>Source Files\Device and stuph</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

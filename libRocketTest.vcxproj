@@ -92,7 +92,7 @@
   <ItemGroup>
     <ClCompile Include="ButtonEvent.cpp" />
     <ClCompile Include="DeviceHandler.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="DIInputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="RenderInterfaceDx10.cpp" />
@@ -103,7 +103,7 @@
   <ItemGroup>
     <ClInclude Include="ButtonEvent.h" />
     <ClInclude Include="DeviceHandler.h" />
-    <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="DIInputHandler.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="RenderInterfaceDx10.h" />
     <ClInclude Include="SystemInterfaceDx10.h" />
