@@ -16,7 +16,7 @@ using namespace std;
 class MenuShit
 {
 private:
-	DIInputHandler* input;
+	Input* input;
 	//Timer* timer;
 	RenderInterfaceDx10* renderInterface;
 	SystemInterfaceDx10* systemInterface;
@@ -31,12 +31,12 @@ private:
 public:
 	MenuShit();
 	~MenuShit();
-	void init(DIInputHandler* _input, Timer* _timer, int _wndWidth, int _wndHeight,
-		ID3D10Device* _device, ID3D10Effect* _effect, int _techNr, int _passNr);
-	bool setDocument(string filename);
+	void init(Input* p_input, Timer* p_timer, int p_wndWidth, int p_wndHeight,
+		ID3D10Device* p_device, ID3D10Effect* p_effect, int p_techNr, int p_passNr);
+	bool setDocument( string p_filename );
 	void releaseContext();
 	void releaseDocument();
-	void update(float _dt);
+	void update( float p_dt );
 	void draw();
 
 };

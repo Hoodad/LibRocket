@@ -13,10 +13,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	DeviceHandler* deviceHandler = new DeviceHandler( hInstance, wndWidth, wndHeight);
 	Timer* timer = new Timer();
-	DIInputHandler* inputHandler = new DIInputHandler( &hInstance, deviceHandler->getHWnd());
+	Input* input = new DIInputHandler( &hInstance, deviceHandler->getHWnd());
 	//inputHandler->i
 	MenuShit* menu = new MenuShit();
-	menu->init(inputHandler, timer, wndWidth, wndHeight,
+	menu->init( input, timer, wndWidth, wndHeight,
 		deviceHandler->getDevice(), deviceHandler->getEffect(), 0, 0 );
 	menu->setDocument("../menu/assets/demo.rml");
 
@@ -34,7 +34,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		else
 		{
 			timer->tick();
-			inputHandler->update();
+			input->update();
 			menu->update(timer->getDt());
 			deviceHandler->beginDrawing();
 			menu->draw();
@@ -44,7 +44,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	//return msg.wParam;
 
 	delete menu;
-	delete inputHandler;
+	delete input;
 	delete timer;
 	delete deviceHandler;
 

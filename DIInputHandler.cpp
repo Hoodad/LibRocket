@@ -29,15 +29,16 @@ DIInputHandler::DIInputHandler(HINSTANCE* _hInstance, HWND* _hWnd)
 	dinmouse->SetCooperativeLevel(*hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 
 	reset();
-
-	// Debug Vars
-	mouseSpeedX = 1.0f;
-
-	for ( int i=0; i<NUM_MOUSE_KEYS; i++)
-	{
-		m_mouseKeys[i] = KEY_UP;
-	}
-	
+	m_DIKtoKeyMap[W]	 = DIK_W;
+	m_DIKtoKeyMap[A]	 = DIK_A;
+	m_DIKtoKeyMap[S]	 = DIK_S;
+	m_DIKtoKeyMap[D]	 = DIK_D;
+	m_DIKtoKeyMap[SPACE] = DIK_SPACE;
+	m_DIKtoKeyMap[LCTRL] = DIK_LCONTROL;
+	m_DIKtoKeyMap[F1]	 = DIK_F1;
+	m_DIKtoKeyMap[F2]	 = DIK_F2;
+	m_DIKtoKeyMap[F3]	 = DIK_F3;
+	m_DIKtoKeyMap[F4]	 = DIK_F4;
 }
 
 DIInputHandler::~DIInputHandler()
@@ -49,19 +50,11 @@ DIInputHandler::~DIInputHandler()
 
 void DIInputHandler::reset()
 {
-	keys[A] = 0;
-	keys[S] = 0;
-	keys[D] = 0;
-	keys[W] = 0;
-	keys[SPACE] = 0;
-	keys[LCTRL] = 0;
-	keys[F1] = 0;
-	keys[F2] = 0;
-	keys[F3] = 0;
-	keys[F4] = 0;
+	for( int i=0; i<NUM_MOUSE_KEYS; i++)
+		m_mouseBtns[i] = KEY_UP;
 
-	mouse[X] = 0;
-	mouse[Y] = 0;
+	for( int i=0; i<NUM_KEYB_KEYS; i++)
+		m_mouseBtns[i] = KEY_UP;
 }
 
 void DIInputHandler::detectInput(void)
@@ -73,99 +66,46 @@ void DIInputHandler::detectInput(void)
 	// get the input data
 	dinkeyboard->GetDeviceState(256, (LPVOID)keystate);
 	dinmouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mousestate);
+
+	//Reset the mouse vars
+	m_mouseTravel[X] = 0;
+	m_mouseTravel[Y] = 0;
 }
 
 void DIInputHandler::update()
 {
-	reset();
 	detectInput();
-	
-	if(keystate[DIK_W] & 0x80)
-		keys[W] = true;
-	if(keystate[DIK_A] & 0x80)
-		keys[A] = true;
-	if(keystate[DIK_S] & 0x80)
-		keys[S] = true;
-	if(keystate[DIK_D] & 0x80)
-		keys[D] = true;
-	if(keystate[DIK_SPACE] & 0x80)
-		keys[SPACE] = true;
-	if(keystate[DIK_LSHIFT] & 0x80) //DEBUG: should be LCONTROL
-		keys[LCTRL] = true;
-
-	if(keystate[DIK_F1] & 0x80)
-		keys[F1] = true;
-	if(keystate[DIK_F2] & 0x80)
-		keys[F2] = true;
-	if(keystate[DIK_F3] & 0x80)
-		keys[F3] = true;
-	if(keystate[DIK_F4] & 0x80)
-		keys[F4] = true;
 
 	if(keystate[DIK_ESCAPE] & 0x80)
 		PostMessage(*hWnd, WM_DESTROY, 0, 0);
 
 	for( int i=0; i<NUM_MOUSE_KEYS; i++)
 	{
-		if( m_mouseKeys[i] == KEY_UP )
-		{
-			if( mousestate.rgbButtons[i] )
-				m_mouseKeys[i] = KEY_PRESSED;
-			else
-				m_mouseKeys[i] = KEY_UP;
-		}
-		else if( m_mouseKeys[i] == KEY_PRESSED )
-		{
-			if( mousestate.rgbButtons[i] )
-				m_mouseKeys[i] = KEY_DOWN;
-			else
-				m_mouseKeys[i] = KEY_RELEASED;
-		}
-		else if( m_mouseKeys[i] == KEY_DOWN )
-		{
-			if( mousestate.rgbButtons[i] )
-				m_mouseKeys[i] = KEY_DOWN;
-			else
-				m_mouseKeys[i] = KEY_RELEASED;
-		}
-		else if( m_mouseKeys[i] == KEY_RELEASED )
-		{
-			if( mousestate.rgbButtons[i] )
-				m_mouseKeys[i] = KEY_PRESSED;
-			else
-				m_mouseKeys[i] = KEY_UP;
-		}
-		else
-		{
-			// should NEVER happen!
-			m_mouseKeys[i] = KEY_UP;
-		}
+		m_mouseBtns[i] = calcState( m_mouseBtns[i], mousestate.rgbButtons[i] );
+	}
+
+	for( int i=0; i<NUM_KEYB_KEYS; i++)
+	{
+		m_kbKeys[i] = calcState( m_kbKeys[i], m_DIKtoKeyMap[i] );
 	}
 }
 
-bool DIInputHandler::getKey(int key)
+int DIInputHandler::getKeyState( int p_key )
 {
-	return keys[key];
+	return m_kbKeys[p_key];
 }
 
 int DIInputHandler::getMouseKeyState( int p_key )
 {
-	return m_mouseKeys[p_key];
+	return m_mouseBtns[p_key];
 }
 
 long DIInputHandler::getMouse(int axis)
 {
-	//DEBUG: return std values
-	if(axis == X)
-	{
+	if( axis == X )
 		return mousestate.lX;
-	}
-	else if (axis == Y)
-	{
+	else if ( axis == Y )
 		return mousestate.lY;
-	}
 	else
-	{
 		return 0;
-	}
 }

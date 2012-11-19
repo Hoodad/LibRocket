@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -19,15 +15,27 @@
     <Filter Include="Source Files\Device and stuph">
       <UniqueIdentifier>{d92575d0-4087-4814-a617-61621efbef8a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\InputManager">
+    <Filter Include="Source Files\Inputs">
+      <UniqueIdentifier>{4674a5a8-a11e-408e-9fd9-c9dcfdb95076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inputs\InputManager">
       <UniqueIdentifier>{9bfc4d7e-cb8d-4bf0-8aa9-80e4d06c5e01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inputs\InputManager\Controls">
+      <UniqueIdentifier>{64666ec2-9610-4e9e-8fc1-c339672be4a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inputs\Direct input">
+      <UniqueIdentifier>{80f862a8-da98-495b-b8a0-c0994736f361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inputs\Message Loop">
+      <UniqueIdentifier>{071f6504-09f9-4587-975b-b7f2c54e6b82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inputs\xInput">
+      <UniqueIdentifier>{2a6971b1-d1d1-43ee-833f-02f2d0b9a608}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DIInputHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Menu.cpp">
@@ -51,11 +59,23 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files\Device and stuph</Filter>
     </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Inputs\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="AnalogueControl.cpp">
+      <Filter>Source Files\Inputs\InputManager\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="DigitalControl.cpp">
+      <Filter>Source Files\Inputs\InputManager\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="DIInputHandler.cpp">
+      <Filter>Source Files\Inputs\Direct input</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\Inputs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DIInputHandler.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>Source Files\LibRocket</Filter>
     </ClInclude>
@@ -82,6 +102,21 @@
     </ClInclude>
     <ClInclude Include="VertexTexture.h">
       <Filter>Source Files\Device and stuph</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Source Files\Inputs\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="AnalogueControl.h">
+      <Filter>Source Files\Inputs\InputManager\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="DigitalControl.h">
+      <Filter>Source Files\Inputs\InputManager\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="DIInputHandler.h">
+      <Filter>Source Files\Inputs\Direct input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Source Files\Inputs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

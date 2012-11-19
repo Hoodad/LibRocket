@@ -20,45 +20,45 @@ MenuShit::~MenuShit()
 	delete systemInterface;
 }
 
-void MenuShit::init(DIInputHandler* _input, Timer* _timer, int _wndWidth, int _wndHeight,
-	ID3D10Device* _device, ID3D10Effect* _effect, int _techNr, int _passNr)
+void MenuShit::init(Input* p_input, Timer* p_timer, int p_wndWidth, int p_wndHeight,
+	ID3D10Device* p_device, ID3D10Effect* p_effect, int p_techNr, int p_passNr)
 {
-	input = _input;
+	input = p_input;
 	//timer = _timer;
 
-	renderInterface = new RenderInterfaceDx10(_device, _effect, _techNr, _passNr);
-	systemInterface = new SystemInterfaceDx10(_timer);
+	renderInterface = new RenderInterfaceDx10( p_device, p_effect, p_techNr, p_passNr );
+	systemInterface = new SystemInterfaceDx10( p_timer );
 
-	Rocket::Core::SetSystemInterface(systemInterface);
-	Rocket::Core::SetRenderInterface(renderInterface);
+	Rocket::Core::SetSystemInterface( systemInterface );
+	Rocket::Core::SetRenderInterface( renderInterface );
 	Rocket::Core::Initialise();
 
-	context = Rocket::Core::CreateContext("default", Rocket::Core::Vector2i(1280, 720));
-	Rocket::Debugger::Initialise(context);
-	Rocket::Debugger::SetVisible(true);
+	context = Rocket::Core::CreateContext( "default", Rocket::Core::Vector2i(1280, 720) );
+	Rocket::Debugger::Initialise( context );
+	Rocket::Debugger::SetVisible( true );
 
-	Rocket::Core::FontDatabase::LoadFontFace("../menu/assets/Delicious-Bold.otf");
-	Rocket::Core::FontDatabase::LoadFontFace("../menu/assets/Delicious-BoldItalic.otf");
-	Rocket::Core::FontDatabase::LoadFontFace("../menu/assets/Delicious-Italic.otf");
-	Rocket::Core::FontDatabase::LoadFontFace("../menu/assets/Delicious-Roman.otf");
+	Rocket::Core::FontDatabase::LoadFontFace( "../menu/assets/Delicious-Bold.otf" );
+	Rocket::Core::FontDatabase::LoadFontFace( "../menu/assets/Delicious-BoldItalic.otf" );
+	Rocket::Core::FontDatabase::LoadFontFace( "../menu/assets/Delicious-Italic.otf" );
+	Rocket::Core::FontDatabase::LoadFontFace( "../menu/assets/Delicious-Roman.otf" );
 }
 
-bool MenuShit::setDocument(string _fileName)
+bool MenuShit::setDocument(string p_fileName)
 {
 	releaseDocument();
 
 	bool success = false;
 
-	if(context != NULL)
+	if( context != NULL )
 	{
-		m_document1 = context->LoadDocument(_fileName.c_str());
-		m_document2 = context->LoadDocument(_fileName.c_str());
-		if(m_document1 != NULL)
+		m_document1 = context->LoadDocument( p_fileName.c_str() );
+		m_document2 = context->LoadDocument( p_fileName.c_str() );
+		if( m_document1 != NULL )
 		{
-			m_document1->GetElementById("title")->SetInnerRML("DELUXE");
-			Rocket::Core::Element *element = m_document1->GetElementById("btn");
+			m_document1->GetElementById( "title" )->SetInnerRML( "DELUXE" );
+			Rocket::Core::Element *element = m_document1->GetElementById( "btn" );
 
-			if(element != NULL)
+			if( element != NULL )
 			{
 				m_btn1 = new ButtonEvent( m_document1, "Changed" );
 				element->AddEventListener( "click", m_btn1 );
@@ -68,7 +68,7 @@ bool MenuShit::setDocument(string _fileName)
 			m_document1->Show();
 			m_document1->RemoveReference();
 		}
-		if(m_document2 != NULL)
+		if( m_document2 != NULL )
 		{
 			m_document2->GetElementById("title")->SetInnerRML("DESTINY");
 			success = true;
@@ -104,22 +104,27 @@ void MenuShit::releaseDocument()
 	}
 }
 
-void MenuShit::update(float _dt)
+void MenuShit::update( float p_dt )
 {
 	POINT cursorPos;
 	GetCursorPos(&cursorPos);
 
 	context->ProcessMouseMove(cursorPos.x, cursorPos.y,0);
 
-	if( input->getMouseKeyState( DIInputHandler::M_LBTN ) == DIInputHandler::KEY_PRESSED )
+	if( input->getMouseKeyState( Input::M_LBTN ) == Input::KEY_PRESSED )
 		context->ProcessMouseButtonDown( 0, 0 );
-	else if( input->getMouseKeyState( DIInputHandler::M_LBTN ) == DIInputHandler::KEY_RELEASED )
+	else if( input->getMouseKeyState( Input::M_LBTN ) == Input::KEY_RELEASED )
 		context->ProcessMouseButtonUp( 0, 0 );
 
-	if( input->getMouseKeyState( DIInputHandler::M_RBTN ) == DIInputHandler::KEY_PRESSED )
+	if( input->getMouseKeyState( Input::M_RBTN ) == Input::KEY_PRESSED )
 		context->ProcessMouseButtonDown( 0, 0 );
-	else if( input->getMouseKeyState( DIInputHandler::M_RBTN ) == DIInputHandler::KEY_RELEASED )
+	else if( input->getMouseKeyState( Input::M_RBTN ) == Input::KEY_RELEASED )
 		context->ProcessMouseButtonUp( 0, 0 );
+
+	if( input->getKeyState( Input::W ) == Input::KEY_PRESSED )
+		context->ProcessKeyDown( Rocket::Core::Input::KI_W, 0 );
+	else if( input->getKeyState( Input::W ) == Input::KEY_RELEASED )
+		context->ProcessKeyUp( input->libRocketFromKeys(Input::W), 0 );
 
 	context->Update();
 }
