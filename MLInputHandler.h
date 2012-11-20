@@ -16,10 +16,15 @@ class MLInputHandler : public Input
 {
 private:
 	int m_mouseTravel[NUM_MOUSE_AXIS];
-	int m_mouseBtns[NUM_MOUSE_KEYS];
-	int m_DIKtoKeyMap[NUM_KEYB_KEYS];
-	int m_kbKeys[NUM_KEYB_KEYS];
-	int keyFromCharMap[VK_F4+1]; //F4 is the last char
+	int m_mouseBtnStates[NUM_MOUSE_KEYS];
+	int m_keyStates[NUM_KEYB_KEYS];
+
+	bool m_mouseBtnsPressed[NUM_MOUSE_KEYS];
+	bool m_mouseBtnsReleased[NUM_MOUSE_KEYS];
+	bool m_keysPressed[NUM_KEYB_KEYS];
+	bool m_keysReleased[NUM_KEYB_KEYS];
+
+	int m_keyFromCharMap[VK_LCONTROL+1]; //VK_LCONTROL is the last char
 	static deque<MsgAndParams> msgQue;
 
 public:

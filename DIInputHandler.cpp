@@ -35,6 +35,7 @@ DIInputHandler::DIInputHandler(HINSTANCE* _hInstance, HWND* _hWnd)
 	m_dikFromKeyMap[D]		= DIK_D;
 	m_dikFromKeyMap[SPACE]	= DIK_SPACE;
 	m_dikFromKeyMap[LCTRL]	= DIK_LCONTROL;
+	m_dikFromKeyMap[ESC]	= DIK_ESCAPE;
 	m_dikFromKeyMap[F1]		= DIK_F1;
 	m_dikFromKeyMap[F2]		= DIK_F2;
 	m_dikFromKeyMap[F3]		= DIK_F3;
@@ -55,57 +56,59 @@ void DIInputHandler::reset()
 
 	for( int i=0; i<NUM_KEYB_KEYS; i++)
 		m_mouseBtns[i] = KEY_UP;
+
+	m_mouseTravel[X] = 0;
+	m_mouseTravel[Y] = 0;
+	m_mouseTravel[Z] = 0;
 }
 
 void DIInputHandler::detectInput(void)
 {
-	// get access if we don't have it already
+	// Get access if we don't have it already
 	dinkeyboard->Acquire();
 	dinmouse->Acquire();
 
-	// get the input data
+	// Get the input data
 	dinkeyboard->GetDeviceState(256, (LPVOID)keystate);
 	dinmouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mousestate);
 
-	//Reset the mouse vars
-	m_mouseTravel[X] = 0;
-	m_mouseTravel[Y] = 0;
+	// Set the mouse vars
+	m_mouseTravel[X] = mousestate.lX;
+	m_mouseTravel[Y] = mousestate.lY;
+	m_mouseTravel[Z] = mousestate.lZ;
 }
 
 void DIInputHandler::update()
 {
 	detectInput();
 
-	if(keystate[DIK_ESCAPE] & 0x80)
-		PostMessage(*hWnd, WM_DESTROY, 0, 0);
-
 	for( int i=0; i<NUM_MOUSE_KEYS; i++)
-	{
 		m_mouseBtns[i] = calcState( m_mouseBtns[i], mousestate.rgbButtons[i] );
-	}
 
 	for( int i=0; i<NUM_KEYB_KEYS; i++)
-	{
 		m_kbKeys[i] = calcState( m_kbKeys[i], keystate[m_dikFromKeyMap[i]] & 0x80 );
-	}
 }
 
 int DIInputHandler::getKeyState( int p_key )
 {
-	return m_kbKeys[p_key];
+	if( 0 <= p_key && p_key < NUM_KEYB_KEYS )
+		return m_kbKeys[p_key];
+	else
+		return KEY_UP;
 }
 
 int DIInputHandler::getMouseKeyState( int p_key )
 {
-	return m_mouseBtns[p_key];
+	if( 0 <= p_key && p_key < NUM_MOUSE_KEYS )
+		return m_mouseBtns[p_key];
+	else
+		return KEY_UP;
 }
 
 long DIInputHandler::getMouse(int axis)
 {
-	if( axis == X )
-		return mousestate.lX;
-	else if ( axis == Y )
-		return mousestate.lY;
+	if( 0 <= axis && axis < NUM_MOUSE_AXIS )
+		return m_mouseTravel[axis];
 	else
 		return 0;
 }

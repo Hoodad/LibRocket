@@ -13,15 +13,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	int wndHeight = 720;
 
 	DeviceHandler* deviceHandler = new DeviceHandler( hInstance, wndWidth, wndHeight);
-	Timer* timer = new Timer();
 	Input* input = NULL;
 	//input = new DIInputHandler( &hInstance, deviceHandler->getHWnd() );
 	input = new MLInputHandler();
-	MenuShit* menuxXx;
-	menuxXx = new MenuShit();
-	menuxXx->init( input, timer, wndWidth, wndHeight,
-		deviceHandler->getDevice(), deviceHandler->getEffect(), 0, 0 );
-	menuxXx->setDocument("../menu/assets/demo.rml");
+	Timer* timer = new Timer();
+	Menu* menu;
+	menu = new Menu( input, timer, wndWidth, wndHeight, deviceHandler, 0, 0 );
+	menu->setDocument("../menu/assets/demo.rml");
 
 	//exit(0); //HACK: DEBUG: profiling
 	MSG msg = {0};
@@ -36,17 +34,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		}
 		else
 		{
+			if( input != NULL )
+				input->update();
+
 			timer->tick();
-			input->update();
-			menuxXx->update(timer->getDt());
+			menu->update(timer->getDt());
 			deviceHandler->beginDrawing();
-			menuxXx->draw();
+			menu->draw();
 			deviceHandler->presentFrame();
 		}
 	}
 	//return msg.wParam;
 
-	delete menuxXx;
+	delete menu;
 	delete input;
 	delete timer;
 	delete deviceHandler;

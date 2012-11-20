@@ -13,12 +13,14 @@ LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			PostQuitMessage(0);
 			return 0;
-		} break;
+		}
+		break;
 
 		default:
 		{
 			MLInputHandler::pushToQue( message, wParam, lParam );
 		}
+		break;
 	}
 
 	// Handle any messages the switch statement didn't

@@ -10,14 +10,15 @@
 #include <Rocket/Core.h>
 #include <Rocket/Debugger.h>
 #include "ButtonEvent.h"
+#include "DeviceHandler.h"
 
 using namespace std;
 
-class MenuShit
+class Menu
 {
 private:
 	Input* input;
-	//Timer* timer;
+	DeviceHandler* m_dh;
 	RenderInterfaceDx10* renderInterface;
 	SystemInterfaceDx10* systemInterface;
 	Rocket::Core::Context* context;
@@ -27,12 +28,13 @@ private:
 	ButtonEvent* m_btn2;
 
 	//string documentFileName;
+private:
+	void init();
 
 public:
-	MenuShit();
-	~MenuShit();
-	void init(Input* p_input, Timer* p_timer, int p_wndWidth, int p_wndHeight,
-		ID3D10Device* p_device, ID3D10Effect* p_effect, int p_techNr, int p_passNr);
+	Menu(Input* p_input, Timer* p_timer, int p_wndWidth, int p_wndHeight,
+		DeviceHandler* p_dh, int p_techNr, int p_passNr);
+	~Menu();
 	bool setDocument( string p_filename );
 	void releaseContext();
 	void releaseDocument();

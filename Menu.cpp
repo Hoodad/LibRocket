@@ -1,6 +1,7 @@
 #include "Menu.h"
 
-MenuShit::MenuShit()
+Menu::Menu(Input* p_input, Timer* p_timer, int p_wndWidth, int p_wndHeight,
+	DeviceHandler* p_dh, int p_techNr, int p_passNr)
 {
 	input           = NULL;
 	renderInterface = NULL;
@@ -10,9 +11,17 @@ MenuShit::MenuShit()
 	m_document2     = NULL;
 	m_btn1			= NULL;
 	m_btn2			= NULL;
+
+	input = p_input;
+	m_dh = p_dh;
+
+	renderInterface = new RenderInterfaceDx10( p_dh->getDevice(), p_dh->getEffect(), p_techNr, p_passNr );
+	systemInterface = new SystemInterfaceDx10( p_timer );
+
+	init();
 }
 
-MenuShit::~MenuShit()
+Menu::~Menu()
 {
 	releaseContext();
 
@@ -20,15 +29,8 @@ MenuShit::~MenuShit()
 	delete systemInterface;
 }
 
-void MenuShit::init(Input* p_input, Timer* p_timer, int p_wndWidth, int p_wndHeight,
-	ID3D10Device* p_device, ID3D10Effect* p_effect, int p_techNr, int p_passNr)
+void Menu::init()
 {
-	input = p_input;
-	//timer = _timer;
-
-	renderInterface = new RenderInterfaceDx10( p_device, p_effect, p_techNr, p_passNr );
-	systemInterface = new SystemInterfaceDx10( p_timer );
-
 	Rocket::Core::SetSystemInterface( systemInterface );
 	Rocket::Core::SetRenderInterface( renderInterface );
 	Rocket::Core::Initialise();
@@ -43,7 +45,7 @@ void MenuShit::init(Input* p_input, Timer* p_timer, int p_wndWidth, int p_wndHei
 	Rocket::Core::FontDatabase::LoadFontFace( "../menu/assets/Delicious-Roman.otf" );
 }
 
-bool MenuShit::setDocument(string p_fileName)
+bool Menu::setDocument(string p_fileName)
 {
 	releaseDocument();
 
@@ -82,7 +84,7 @@ bool MenuShit::setDocument(string p_fileName)
 	return success;
 }
 
-void MenuShit::releaseContext()
+void Menu::releaseContext()
 {
 	releaseDocument();
 	context->RemoveReference(); //release context
@@ -90,7 +92,7 @@ void MenuShit::releaseContext()
 	context = NULL;
 }
 
-void MenuShit::releaseDocument()
+void Menu::releaseDocument()
 {
 	if(m_document1 != NULL)
 	{
@@ -104,32 +106,42 @@ void MenuShit::releaseDocument()
 	}
 }
 
-void MenuShit::update( float p_dt )
+void Menu::update( float p_dt )
 {
 	POINT cursorPos;
 	GetCursorPos(&cursorPos);
 
-	context->ProcessMouseMove(cursorPos.x, cursorPos.y,0);
+		context->ProcessMouseMove(cursorPos.x, cursorPos.y,0);
+	if( input != NULL )
+	{
+		int x = input->getMouse( Input::X );
+		int y = input->getMouse( Input::Y );
 
-	if( input->getMouseKeyState( Input::M_LBTN ) == Input::KEY_PRESSED )
-		context->ProcessMouseButtonDown( 0, 0 );
-	else if( input->getMouseKeyState( Input::M_LBTN ) == Input::KEY_RELEASED )
-		context->ProcessMouseButtonUp( 0, 0 );
+		if( input->getMouseKeyState( Input::M_LBTN ) == Input::KEY_PRESSED )
+			context->ProcessMouseButtonDown( 0, 0 );
+		else if( input->getMouseKeyState( Input::M_LBTN ) == Input::KEY_RELEASED )
+			context->ProcessMouseButtonUp( 0, 0 );
 
-	if( input->getMouseKeyState( Input::M_RBTN ) == Input::KEY_PRESSED )
-		context->ProcessMouseButtonDown( 0, 0 );
-	else if( input->getMouseKeyState( Input::M_RBTN ) == Input::KEY_RELEASED )
-		context->ProcessMouseButtonUp( 0, 0 );
+		if( input->getMouseKeyState( Input::M_RBTN ) == Input::KEY_PRESSED )
+			context->ProcessMouseButtonDown( 0, 0 );
+		else if( input->getMouseKeyState( Input::M_RBTN ) == Input::KEY_RELEASED )
+			context->ProcessMouseButtonUp( 0, 0 );
 
-	if( input->getKeyState( Input::W ) == Input::KEY_PRESSED )
-		context->ProcessKeyDown( Rocket::Core::Input::KI_W, 0 );
-	else if( input->getKeyState( Input::W ) == Input::KEY_RELEASED )
-		context->ProcessKeyUp( input->libRocketFromKeys(Input::W), 0 );
+		if( input->getKeyState( Input::W ) == Input::KEY_PRESSED )
+			context->ProcessKeyDown( Rocket::Core::Input::KI_W, 0 );
+		else if( input->getKeyState( Input::W ) == Input::KEY_RELEASED )
+			context->ProcessKeyUp( input->libRocketFromKeys(Input::W), 0 );
+
+		//HACK: kill application if ESC is pressed
+		if( input->getKeyState( Input::ESC ) == Input::KEY_PRESSED )
+			PostMessage(*m_dh->getHWnd(), WM_DESTROY, 0, 0);
+
+	}
 
 	context->Update();
 }
 
-void MenuShit::draw()
+void Menu::draw()
 {
 	context->Render();
 }
