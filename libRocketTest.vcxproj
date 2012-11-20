@@ -99,6 +99,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MLInputHandler.cpp" />
     <ClCompile Include="RenderInterfaceDx10.cpp" />
     <ClCompile Include="SystemInterfaceDx10.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="MLInputHandler.h" />
     <ClInclude Include="RenderInterfaceDx10.h" />
     <ClInclude Include="SystemInterfaceDx10.h" />
     <ClInclude Include="Texture.h" />

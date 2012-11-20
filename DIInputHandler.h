@@ -20,8 +20,8 @@ private:
 
 	long m_mouseTravel[NUM_MOUSE_AXIS];
 	int m_mouseBtns[NUM_MOUSE_KEYS];
-	int m_DIKtoKeyMap[NUM_KEYB_KEYS];
 	int m_kbKeys[NUM_KEYB_KEYS];
+	int m_dikFromKeyMap[NUM_KEYB_KEYS];
 
 public:
 	DIInputHandler(HINSTANCE* hInstance, HWND* hWnd); // sets up and initializes DirectInput

@@ -2,6 +2,7 @@
 #include "DeviceHandler.h"
 #include "Timer.h"
 #include "DIInputHandler.h"
+#include "MLInputHandler.h"
 
 #include <iostream>
 
@@ -13,12 +14,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	DeviceHandler* deviceHandler = new DeviceHandler( hInstance, wndWidth, wndHeight);
 	Timer* timer = new Timer();
-	Input* input = new DIInputHandler( &hInstance, deviceHandler->getHWnd());
-	//inputHandler->i
-	MenuShit* menu = new MenuShit();
-	menu->init( input, timer, wndWidth, wndHeight,
+	Input* input = NULL;
+	//input = new DIInputHandler( &hInstance, deviceHandler->getHWnd() );
+	input = new MLInputHandler();
+	MenuShit* menuxXx;
+	menuxXx = new MenuShit();
+	menuxXx->init( input, timer, wndWidth, wndHeight,
 		deviceHandler->getDevice(), deviceHandler->getEffect(), 0, 0 );
-	menu->setDocument("../menu/assets/demo.rml");
+	menuxXx->setDocument("../menu/assets/demo.rml");
 
 	//exit(0); //HACK: DEBUG: profiling
 	MSG msg = {0};
@@ -35,15 +38,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		{
 			timer->tick();
 			input->update();
-			menu->update(timer->getDt());
+			menuxXx->update(timer->getDt());
 			deviceHandler->beginDrawing();
-			menu->draw();
+			menuxXx->draw();
 			deviceHandler->presentFrame();
 		}
 	}
 	//return msg.wParam;
 
-	delete menu;
+	delete menuxXx;
 	delete input;
 	delete timer;
 	delete deviceHandler;

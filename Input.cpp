@@ -15,7 +15,6 @@ Input::Input(void)
 	libRocketFromKeysMap[F4]	= Rocket::Core::Input::KI_F4;
 }
 
-
 Input::~Input(void)
 {
 }

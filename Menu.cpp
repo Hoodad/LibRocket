@@ -132,5 +132,4 @@ void MenuShit::update( float p_dt )
 void MenuShit::draw()
 {
 	context->Render();
-	
 }

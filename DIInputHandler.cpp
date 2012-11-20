@@ -29,16 +29,16 @@ DIInputHandler::DIInputHandler(HINSTANCE* _hInstance, HWND* _hWnd)
 	dinmouse->SetCooperativeLevel(*hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 
 	reset();
-	m_DIKtoKeyMap[W]	 = DIK_W;
-	m_DIKtoKeyMap[A]	 = DIK_A;
-	m_DIKtoKeyMap[S]	 = DIK_S;
-	m_DIKtoKeyMap[D]	 = DIK_D;
-	m_DIKtoKeyMap[SPACE] = DIK_SPACE;
-	m_DIKtoKeyMap[LCTRL] = DIK_LCONTROL;
-	m_DIKtoKeyMap[F1]	 = DIK_F1;
-	m_DIKtoKeyMap[F2]	 = DIK_F2;
-	m_DIKtoKeyMap[F3]	 = DIK_F3;
-	m_DIKtoKeyMap[F4]	 = DIK_F4;
+	m_dikFromKeyMap[W]		= DIK_W;
+	m_dikFromKeyMap[A]		= DIK_A;
+	m_dikFromKeyMap[S]		= DIK_S;
+	m_dikFromKeyMap[D]		= DIK_D;
+	m_dikFromKeyMap[SPACE]	= DIK_SPACE;
+	m_dikFromKeyMap[LCTRL]	= DIK_LCONTROL;
+	m_dikFromKeyMap[F1]		= DIK_F1;
+	m_dikFromKeyMap[F2]		= DIK_F2;
+	m_dikFromKeyMap[F3]		= DIK_F3;
+	m_dikFromKeyMap[F4]		= DIK_F4;
 }
 
 DIInputHandler::~DIInputHandler()
@@ -86,7 +86,7 @@ void DIInputHandler::update()
 
 	for( int i=0; i<NUM_KEYB_KEYS; i++)
 	{
-		m_kbKeys[i] = calcState( m_kbKeys[i], m_DIKtoKeyMap[i] );
+		m_kbKeys[i] = calcState( m_kbKeys[i], keystate[m_dikFromKeyMap[i]] & 0x80 );
 	}
 }
 

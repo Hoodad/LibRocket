@@ -6,6 +6,7 @@
 #include <windowsx.h>
 #include <d3d10.h>
 #include <d3dx10.h>
+#include "MLInputHandler.h"
 
 using namespace std;
 
