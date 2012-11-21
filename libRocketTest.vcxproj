@@ -104,6 +104,7 @@
     <ClCompile Include="SystemInterfaceDx10.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="XIInputHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnalogueControl.h" />
@@ -121,6 +122,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="VertexTexture.h" />
+    <ClInclude Include="XIInputHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

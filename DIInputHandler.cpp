@@ -57,9 +57,11 @@ void DIInputHandler::reset()
 	for( int i=0; i<NUM_KEYB_KEYS; i++)
 		m_mouseBtns[i] = KEY_UP;
 
-	m_mouseTravel[X] = 0;
-	m_mouseTravel[Y] = 0;
-	m_mouseTravel[Z] = 0;
+	for( int i=0; i<NUM_MOUSE_AXIS+1; i++ )
+	{
+		m_mousePos[i] = 0;
+		m_mouseTravel[i] = 0;
+	}
 }
 
 void DIInputHandler::detectInput(void)
@@ -71,16 +73,24 @@ void DIInputHandler::detectInput(void)
 	// Get the input data
 	dinkeyboard->GetDeviceState(256, (LPVOID)keystate);
 	dinmouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mousestate);
-
-	// Set the mouse vars
-	m_mouseTravel[X] = mousestate.lX;
-	m_mouseTravel[Y] = mousestate.lY;
-	m_mouseTravel[Z] = mousestate.lZ;
 }
 
 void DIInputHandler::update()
 {
 	detectInput();
+
+	// Mouse travel (delta position / movement)
+	m_mouseTravel[X] = (int)mousestate.lX;
+	m_mouseTravel[Y] = (int)mousestate.lY;
+	m_mouseTravel[Z] = (int)mousestate.lZ;
+
+	// The mouse position is being fetched not through Direct Input but through
+	// the windows api. The z-component (scrollwheel) is fetched thru DI.
+	POINT cursorPos;
+	GetCursorPos(&cursorPos);
+	m_mousePos[X] = (int)cursorPos.x;
+	m_mousePos[Y] = (int)cursorPos.y;
+	m_mousePos[Z] += (int)mousestate.lZ;
 
 	for( int i=0; i<NUM_MOUSE_KEYS; i++)
 		m_mouseBtns[i] = calcState( m_mouseBtns[i], mousestate.rgbButtons[i] );
@@ -105,7 +115,15 @@ int DIInputHandler::getMouseKeyState( int p_key )
 		return KEY_UP;
 }
 
-long DIInputHandler::getMouse(int axis)
+int DIInputHandler::getMousePos(int axis)
+{
+	if( 0 <= axis && axis < NUM_MOUSE_AXIS )
+		return m_mousePos[axis];
+	else
+		return 0;
+}
+
+int DIInputHandler::getMouseTravel(int axis)
 {
 	if( 0 <= axis && axis < NUM_MOUSE_AXIS )
 		return m_mouseTravel[axis];

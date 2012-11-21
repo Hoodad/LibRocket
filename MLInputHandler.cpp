@@ -4,6 +4,11 @@ deque<MsgAndParams> MLInputHandler::msgQue;
 
 MLInputHandler::MLInputHandler()
 {
+	for( int i=0; i<NUM_MOUSE_AXIS+1; i++ )
+	{
+		m_mousePos[i] = 0;
+		m_mouseTravel[i] = 0;
+	}
 	for( int i=0; i<VK_LCONTROL+1; i++ ) //VK_LCONTROL is the last char
 		m_keyFromCharMap[i] = -1;
 
@@ -59,8 +64,10 @@ void MLInputHandler::processWindowsEvent( UINT p_message, WPARAM p_wParam, LPARA
 			break;
 
 		case WM_MOUSEMOVE:
-			m_mouseTravel[Input::X] = LOWORD(p_lParam);
-			m_mouseTravel[Input::Y] = HIWORD(p_lParam);
+			m_mouseTravel[Input::X] = LOWORD(p_lParam) - m_mousePos[Input::X];
+			m_mouseTravel[Input::Y] = HIWORD(p_lParam) - m_mousePos[Input::Y];
+			m_mousePos[Input::X] = LOWORD(p_lParam);
+			m_mousePos[Input::Y] = HIWORD(p_lParam);
 
 			break;
 
@@ -139,14 +146,18 @@ int MLInputHandler::getMouseKeyState( int p_key )
 	return m_mouseBtnStates[p_key];
 }
 
-long MLInputHandler::getMouse( int axis )
+int MLInputHandler::getMousePos( int axis )
 {
-	if( axis == Input::X )
-		return m_mouseTravel[Input::X];
-	else if ( axis == Input::Y )
-		return m_mouseTravel[Input::Y];
-	else if ( axis == Input::Z )
-		return m_mouseTravel[Input::Z];
+	if( 0 <= axis && axis < NUM_MOUSE_AXIS )
+		return m_mousePos[axis];
+	else
+		return 0;
+}
+
+int MLInputHandler::getMouseTravel( int axis )
+{
+	if( 0 <= axis && axis < NUM_MOUSE_AXIS )
+		return m_mouseTravel[axis];
 	else
 		return 0;
 }

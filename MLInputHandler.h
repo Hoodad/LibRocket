@@ -15,6 +15,7 @@ struct MsgAndParams
 class MLInputHandler : public Input
 {
 private:
+	int m_mousePos[NUM_MOUSE_AXIS];
 	int m_mouseTravel[NUM_MOUSE_AXIS];
 	int m_mouseBtnStates[NUM_MOUSE_KEYS];
 	int m_keyStates[NUM_KEYB_KEYS];
@@ -31,10 +32,11 @@ public:
 	MLInputHandler();
 	~MLInputHandler();
 
-	virtual void update();
-	virtual int getKeyState( int p_key );
-	virtual int getMouseKeyState( int p_key );
-	virtual long getMouse( int p_axis );
+	void update();
+	int getKeyState( int p_key );
+	int getMouseKeyState( int p_key );
+	int getMousePos( int p_axis );
+	int getMouseTravel( int p_axis );
 	void processWindowsEvent( MsgAndParams p_msgAndParams );
 	void processWindowsEvent( UINT p_message, WPARAM p_wParam, LPARAM p_lParam );
 	static void pushToQue( MsgAndParams p_msgAndParams );

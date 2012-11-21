@@ -189,6 +189,23 @@ int DeviceHandler::getWindowHeight()
 	return m_wndHeight;
 }
 
+
+// Solution stolen from:
+// http://stackoverflow.com/questions/1950993/how-do-i-get-the-position-of-a-co
+// ntrol-relative-to-the-windows-client-rect
+void DeviceHandler::getWindowPosition( int *out_x, int *out_y )
+{
+	HWND hWndParent = GetParent(m_hWnd);
+	POINT point = {0};
+
+	MapWindowPoints(m_hWnd, hWndParent, &point, 1);
+
+	if( out_x != NULL )
+		(*out_x) = point.x;
+	if( out_x != NULL )
+		(*out_y) = point.y;
+}
+
 void DeviceHandler::setWindowTitle( string p_text )
 {
 	SetWindowTextA(m_hWnd, p_text.c_str());

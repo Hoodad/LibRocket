@@ -108,14 +108,23 @@ void Menu::releaseDocument()
 
 void Menu::update( float p_dt )
 {
-	POINT cursorPos;
-	GetCursorPos(&cursorPos);
+	//POINT cursorPos;
+	//GetCursorPos(&cursorPos);
 
-		context->ProcessMouseMove(cursorPos.x, cursorPos.y,0);
+	//context->ProcessMouseMove(cursorPos.x, cursorPos.y,0);
 	if( input != NULL )
 	{
-		int x = input->getMouse( Input::X );
-		int y = input->getMouse( Input::Y );
+		int x = input->getMousePos( Input::X );
+		int y = input->getMousePos( Input::Y );
+		int z = input->getMousePos( Input::Z );
+
+		//// Only for Direct Input!
+		int winX, winY;
+		m_dh->getWindowPosition( &winX, &winY );
+		//x -= winX;
+		//y -= winY;
+
+		context->ProcessMouseMove(x, y, 0);
 
 		if( input->getMouseKeyState( Input::M_LBTN ) == Input::KEY_PRESSED )
 			context->ProcessMouseButtonDown( 0, 0 );
@@ -136,6 +145,40 @@ void Menu::update( float p_dt )
 		if( input->getKeyState( Input::ESC ) == Input::KEY_PRESSED )
 			PostMessage(*m_dh->getHWnd(), WM_DESTROY, 0, 0);
 
+		//Update stats:
+		stringstream ss;
+		string tmp;
+		Rocket::Core::Element* el;
+
+		ss.clear();
+		ss<<"x: "<<x<<"<br/>";
+		tmp = ss.str();
+		el = m_document1->GetElementById("x");
+		el->SetInnerRML(tmp.c_str());
+
+		ss.clear();
+		ss<<"y: "<<y<<"<br/>";
+		tmp = ss.str();
+		m_document1->GetElementById("y");
+		el->SetInnerRML(tmp.c_str());
+
+		ss.clear();
+		ss<<"z: "<<z<<"<br/>";
+		tmp = ss.str();
+		m_document1->GetElementById("z");
+		el->SetInnerRML(tmp.c_str());
+
+		ss.clear();
+		ss<<"Win x: "<<winX<<"<br/>";
+		tmp = ss.str();
+		m_document1->GetElementById("winX");
+		el->SetInnerRML(tmp.c_str());
+
+		ss.clear();
+		ss<<"Win y: "<<winY<<"<br/>";
+		tmp = ss.str();
+		m_document1->GetElementById("winY");
+		el->SetInnerRML(tmp.c_str());
 	}
 
 	context->Update();

@@ -18,7 +18,8 @@ private:
 	BYTE keystate[256];    // the storage for the key-information
 	DIMOUSESTATE mousestate;    // the storage for the mouse-information
 
-	long m_mouseTravel[NUM_MOUSE_AXIS];
+	int m_mousePos[NUM_MOUSE_AXIS];
+	int m_mouseTravel[NUM_MOUSE_AXIS];
 	int m_mouseBtns[NUM_MOUSE_KEYS];
 	int m_kbKeys[NUM_KEYB_KEYS];
 	int m_dikFromKeyMap[NUM_KEYB_KEYS];
@@ -33,7 +34,8 @@ public:
 	//bool getKey( int key );
 	virtual int getKeyState( int p_key );
 	int getMouseKeyState( int p_key );
-	long getMouse( int axis );
+	int getMousePos( int axis );
+	int getMouseTravel( int p_axis );
 };
 
 #endif //INPUTHANDLER_H

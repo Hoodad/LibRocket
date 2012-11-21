@@ -77,6 +77,9 @@
     <ClCompile Include="MLInputHandler.cpp">
       <Filter>Source Files\Inputs\Message Loop</Filter>
     </ClCompile>
+    <ClCompile Include="XIInputHandler.cpp">
+      <Filter>Source Files\Inputs\xInput</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h">
@@ -123,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="MLInputHandler.h">
       <Filter>Source Files\Inputs\Message Loop</Filter>
+    </ClInclude>
+    <ClInclude Include="XIInputHandler.h">
+      <Filter>Source Files\Inputs\xInput</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

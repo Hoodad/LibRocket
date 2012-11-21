@@ -46,6 +46,7 @@ public:
 	HWND* getHWnd();
 	int getWindowWidth();
 	int getWindowHeight();
+	void getWindowPosition( int *out_x, int *out_y );
 	void setWindowTitle( string p_text );
 
 	void beginDrawing();
