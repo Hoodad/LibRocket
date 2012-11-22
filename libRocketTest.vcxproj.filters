@@ -24,14 +24,17 @@
     <Filter Include="Source Files\Inputs\InputManager\Controls">
       <UniqueIdentifier>{64666ec2-9610-4e9e-8fc1-c339672be4a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Inputs\Direct input">
-      <UniqueIdentifier>{80f862a8-da98-495b-b8a0-c0994736f361}</UniqueIdentifier>
+    <Filter Include="Source Files\Inputs\proto">
+      <UniqueIdentifier>{bc65e48a-0152-45c6-b798-59fd692a1cd8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Inputs\Message Loop">
+    <Filter Include="Source Files\Inputs\proto\xInput">
+      <UniqueIdentifier>{2a6971b1-d1d1-43ee-833f-02f2d0b9a608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inputs\proto\Message Loop">
       <UniqueIdentifier>{071f6504-09f9-4587-975b-b7f2c54e6b82}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Inputs\xInput">
-      <UniqueIdentifier>{2a6971b1-d1d1-43ee-833f-02f2d0b9a608}</UniqueIdentifier>
+    <Filter Include="Source Files\Inputs\proto\Direct input">
+      <UniqueIdentifier>{80f862a8-da98-495b-b8a0-c0994736f361}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -69,16 +72,19 @@
       <Filter>Source Files\Inputs\InputManager\Controls</Filter>
     </ClCompile>
     <ClCompile Include="DIInputHandler.cpp">
-      <Filter>Source Files\Inputs\Direct input</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files\Inputs</Filter>
+      <Filter>Source Files\Inputs\proto\Direct input</Filter>
     </ClCompile>
     <ClCompile Include="MLInputHandler.cpp">
-      <Filter>Source Files\Inputs\Message Loop</Filter>
+      <Filter>Source Files\Inputs\proto\Message Loop</Filter>
     </ClCompile>
     <ClCompile Include="XIInputHandler.cpp">
-      <Filter>Source Files\Inputs\xInput</Filter>
+      <Filter>Source Files\Inputs\proto\xInput</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\Inputs\proto</Filter>
+    </ClCompile>
+    <ClCompile Include="InputControlFactory.cpp">
+      <Filter>Source Files\Inputs\InputManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,16 +125,19 @@
       <Filter>Source Files\Inputs\InputManager\Controls</Filter>
     </ClInclude>
     <ClInclude Include="DIInputHandler.h">
-      <Filter>Source Files\Inputs\Direct input</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Source Files\Inputs</Filter>
+      <Filter>Source Files\Inputs\proto\Direct input</Filter>
     </ClInclude>
     <ClInclude Include="MLInputHandler.h">
-      <Filter>Source Files\Inputs\Message Loop</Filter>
+      <Filter>Source Files\Inputs\proto\Message Loop</Filter>
     </ClInclude>
     <ClInclude Include="XIInputHandler.h">
-      <Filter>Source Files\Inputs\xInput</Filter>
+      <Filter>Source Files\Inputs\proto\xInput</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Source Files\Inputs\proto</Filter>
+    </ClInclude>
+    <ClInclude Include="InputControlFactory.h">
+      <Filter>Source Files\Inputs\InputManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

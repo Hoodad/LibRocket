@@ -1,5 +1,6 @@
 #pragma once
 
+#include "InputType.h"
 #include "AnalogueControl.h"
 #include "DigitalControl.h"
 
@@ -10,14 +11,22 @@ using namespace std;
 class InputManager
 {
 private:
-	vector<AnalogueControl> analogues;
-	vector<DigitalControl> digitals;
+	const int DIGITAL_ID_OFFSET = INT_MAX/2;
+	vector<AnalogueControl*> analogues;
+	vector<DigitalControl*> digitals;
 
 public:
-	/// Add a control by listening for output. Non blocking.
-	/// \return -1  if no input has been detected. Id for the control if detected. 
-	int addControlByListening();
-	InputManager(void);
-	~InputManager(void);
+	InputManager();
+	~InputManager();
+
+	/// @brief Adds an Analogue Control to the manager.
+	/// The manager takes ownership of the control.
+	/// @return An ID used when working with the Control through the handler.
+	int addAnalogueControl( AnalogueControl* p_control );
+
+	/// @brief Adds a Digital Control to the manager.
+	/// The manager takes ownership of the control.
+	/// @return An ID used when working with the Control through the handler 
+	int addDigitalControl( DigitalControl* p_control );
 };
 

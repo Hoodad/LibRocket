@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include "DIInputHandler.h"
 #include "MLInputHandler.h"
+#include "XIInputHandler.h"
 
 #include <iostream>
 
@@ -15,7 +16,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	DeviceHandler* deviceHandler = new DeviceHandler( hInstance, wndWidth, wndHeight);
 	Input* input = NULL;
 	//input = new DIInputHandler( &hInstance, deviceHandler->getHWnd() );
-	input = new MLInputHandler();
+	//input = new MLInputHandler();
+	input = new XIInputHandler();
 	Timer* timer = new Timer();
 	Menu* menu;
 	menu = new Menu( input, timer, wndWidth, wndHeight, deviceHandler, 0, 0 );
